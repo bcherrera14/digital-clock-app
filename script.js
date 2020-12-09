@@ -18,28 +18,41 @@ const monthNames = [
 
 const weekdays = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
 
-console.log('Date: ');
-let month = monthNames[dateData.getMonth()];
-console.log(month);
-let dayOfWeek = weekdays[dateData.getUTCDay()];
-let day = dateData.getDate().toString().padStart(2, '0');
-console.log(day);
-console.log(dayOfWeek);
-let year = dateData.getFullYear().toString();
-console.log(year);
+let month = '';
+let dayOfWeek = '';
+let day = '';
+let year = '';
+let hours = '';
+let minutes = '';
+let secondsNumeral = null;
+let secondsString = '';
+let universalTimeDifference = null;
+let period = '';
 
-console.log('Time: ');
-let hours = dateData.getHours().toString().padStart(2, '0');
-let minutes = dateData.getMinutes().toString().padStart(2, '0');
-let secondsNumeral = dateData.getSeconds();
-let secondsString = secondsNumeral.toString().padStart(2, '0');
-let universalTimeDifference = dateData.getUTCHours() - dateData.getHours();
-let period = dateData.getUTCHours() - universalTimeDifference >= 12 ? 'PM' : 'AM';
-console.log(hours);
-console.log(minutes);
-console.log(seconds.toString().padStart(2, '0'));
-console.log(period);
-console.log(universalTimeDifference);
+function initiateDate(dateData, monthNames, weekdays) {
+	console.log('Date: ');
+	month = monthNames[dateData.getMonth()];
+	console.log(month);
+	dayOfWeek = weekdays[dateData.getUTCDay()];
+	day = dateData.getDate().toString().padStart(2, '0');
+	console.log(day);
+	console.log(dayOfWeek);
+	year = dateData.getFullYear().toString();
+	console.log(year);
+
+	console.log('Time: ');
+	hours = dateData.getHours().toString().padStart(2, '0');
+	minutes = dateData.getMinutes().toString().padStart(2, '0');
+	secondsNumeral = dateData.getSeconds();
+	secondsString = secondsNumeral.toString().padStart(2, '0');
+	universalTime = dateData.getUTCHours();
+	universalTimeDifference = universalTime - dateData.getHours();
+	period = universalTime - universalTimeDifference >= 12 ? 'PM' : 'AM';
+	console.log(hours);
+	console.log(minutes);
+	console.log(secondsNumeral.toString().padStart(2, '0'));
+	console.log(period);
+}
 
 function setTime(hours, minutes, seconds) {
 	document.getElementById('hours').innerHTML = hours;
@@ -54,5 +67,15 @@ function setDate(weekday, month, date) {
 	document.getElementById('date').innerHTML = date;
 }
 
+initiateDate(dateData, monthNames, weekdays);
 setTime(hours, minutes, secondsString);
 setDate(dayOfWeek, month, day);
+
+setInterval(function() {
+	secondsNumeral += 1;
+	if (secondsNumeral === 60) {
+		initiateDate(new Date(), monthNames, weekdays);
+	}
+	secondsString = secondsNumeral.toString().padStart(2, '0');
+	setTime(hours, minutes, secondsString);
+}, 1000);
