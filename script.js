@@ -22,7 +22,9 @@ let month = '';
 let dayOfWeek = '';
 let day = '';
 let year = '';
-let hours = '';
+let hours = null;
+let hoursMilitary = null;
+let hoursString = '';
 let minutes = '';
 let secondsNumeral = null;
 let secondsString = '';
@@ -41,7 +43,10 @@ function initiateDate(dateData, monthNames, weekdays) {
 	console.log(year);
 
 	console.log('Time: ');
-	hours = dateData.getHours().toString().padStart(2, '0');
+	//hours = dateData.getHours().toString().padStart(2, '0');
+	hours = dateData.getHours() > 12 ? dateData.getHours() - 12 : dateData.getHours();
+	hoursString = hours.toString().padStart(2, '0');
+	hoursMilitary = dateData.getHours().toString().padStart(2, '0');
 	minutes = dateData.getMinutes().toString().padStart(2, '0');
 	secondsNumeral = dateData.getSeconds();
 	secondsString = secondsNumeral.toString().padStart(2, '0');
@@ -49,6 +54,7 @@ function initiateDate(dateData, monthNames, weekdays) {
 	universalTimeDifference = universalTime - dateData.getHours();
 	period = universalTime - universalTimeDifference >= 12 ? 'PM' : 'AM';
 	console.log(hours);
+	console.log(hoursMilitary);
 	console.log(minutes);
 	console.log(secondsNumeral.toString().padStart(2, '0'));
 	console.log(period);
@@ -68,7 +74,7 @@ function setDate(weekday, month, date) {
 }
 
 initiateDate(dateData, monthNames, weekdays);
-setTime(hours, minutes, secondsString);
+setTime(hoursString, minutes, secondsString);
 setDate(dayOfWeek, month, day);
 
 setInterval(function() {
@@ -77,5 +83,5 @@ setInterval(function() {
 		initiateDate(new Date(), monthNames, weekdays);
 	}
 	secondsString = secondsNumeral.toString().padStart(2, '0');
-	setTime(hours, minutes, secondsString);
+	setTime(hoursString, minutes, secondsString);
 }, 1000);
