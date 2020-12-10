@@ -1,5 +1,4 @@
 let dateData = new Date();
-console.log(dateData);
 
 const monthNames = [
 	'January',
@@ -26,7 +25,6 @@ let hours = null;
 let hoursMilitary = null;
 let hoursStandard = '';
 let hoursDisplay = '';
-
 let minutes = '';
 let secondsNumeral = null;
 let secondsString = '';
@@ -34,12 +32,13 @@ let universalTimeDifference = null;
 let period = '';
 let displayMilitaryTime = false;
 
-function initiateDate(dateData, monthNames) {
+function initiateDate(dateData) {
 	month = monthNames[dateData.getMonth()];
 	dayOfWeek = weekdays[dateData.getUTCDay()];
 	day = dateData.getDate().toString().padStart(2, '0');
 	year = dateData.getFullYear().toString();
 	hours = dateData.getHours() > 12 ? dateData.getHours() - 12 : dateData.getHours();
+	hours = hours === 0 ? hours + 12 : hours;
 	hoursMilitary = dateData.getHours().toString().padStart(2, '0');
 	hoursStandard = hours.toString().padStart(2, '0');
 	hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
@@ -74,20 +73,19 @@ function timeFormat() {
 	} else if (displayMilitaryTime === false) {
 		document.getElementById('hours').innerHTML = hoursStandard;
 		document.getElementById('period').style.display = 'inline';
-
 		hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
 		document.getElementById('buttonLabel').innerHTML = '24';
 	}
 }
 
-initiateDate(dateData, monthNames, weekdays);
+initiateDate(dateData);
 setTime(hoursDisplay, minutes, secondsString);
 setDate(dayOfWeek, month, day);
 
 setInterval(function() {
 	secondsNumeral += 1;
 	if (secondsNumeral === 60) {
-		initiateDate(new Date(), monthNames, weekdays);
+		initiateDate(new Date());
 	}
 	secondsString = secondsNumeral.toString().padStart(2, '0');
 	setTime(hoursDisplay, minutes, secondsString);
