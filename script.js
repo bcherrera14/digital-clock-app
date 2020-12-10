@@ -46,8 +46,6 @@ function initiateTime(dateData) {
 	hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
 	minutes = dateData.getMinutes().toString().padStart(2, '0');
 	seconds = dateData.getSeconds();
-	milliseconds = dateData.getMilliseconds();
-	seconds = Math.round((seconds * 1000 + milliseconds) / 1000);
 	seconds = seconds === 60 ? 0 : seconds;
 	secondsDisplay = seconds.toString().padStart(2, '0');
 	universalTime = dateData.getUTCHours();
