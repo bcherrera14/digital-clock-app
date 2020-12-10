@@ -24,40 +24,31 @@ let day = '';
 let year = '';
 let hours = null;
 let hoursMilitary = null;
-let hoursString = '';
+let hoursStandard = '';
+let hoursDisplay = '';
+
 let minutes = '';
 let secondsNumeral = null;
 let secondsString = '';
 let universalTimeDifference = null;
 let period = '';
+let displayMilitaryTime = false;
 
-function initiateDate(dateData, monthNames, weekdays) {
-	console.log('Date: ');
+function initiateDate(dateData, monthNames) {
 	month = monthNames[dateData.getMonth()];
-	console.log(month);
 	dayOfWeek = weekdays[dateData.getUTCDay()];
 	day = dateData.getDate().toString().padStart(2, '0');
-	console.log(day);
-	console.log(dayOfWeek);
 	year = dateData.getFullYear().toString();
-	console.log(year);
-
-	console.log('Time: ');
-	//hours = dateData.getHours().toString().padStart(2, '0');
 	hours = dateData.getHours() > 12 ? dateData.getHours() - 12 : dateData.getHours();
-	hoursString = hours.toString().padStart(2, '0');
 	hoursMilitary = dateData.getHours().toString().padStart(2, '0');
+	hoursStandard = hours.toString().padStart(2, '0');
+	hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
 	minutes = dateData.getMinutes().toString().padStart(2, '0');
 	secondsNumeral = dateData.getSeconds();
 	secondsString = secondsNumeral.toString().padStart(2, '0');
 	universalTime = dateData.getUTCHours();
 	universalTimeDifference = universalTime - dateData.getHours();
 	period = universalTime - universalTimeDifference >= 12 ? 'PM' : 'AM';
-	console.log(hours);
-	console.log(hoursMilitary);
-	console.log(minutes);
-	console.log(secondsNumeral.toString().padStart(2, '0'));
-	console.log(period);
 }
 
 function setTime(hours, minutes, seconds) {
@@ -73,8 +64,24 @@ function setDate(weekday, month, date) {
 	document.getElementById('date').innerHTML = date;
 }
 
+function timeFormat() {
+	displayMilitaryTime = !displayMilitaryTime;
+	if (displayMilitaryTime === true) {
+		document.getElementById('hours').innerHTML = hoursMilitary;
+		document.getElementById('period').style.display = 'none';
+		hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
+		document.getElementById('buttonLabel').innerHTML = '12';
+	} else if (displayMilitaryTime === false) {
+		document.getElementById('hours').innerHTML = hoursStandard;
+		document.getElementById('period').style.display = 'inline';
+
+		hoursDisplay = displayMilitaryTime === true ? hoursMilitary : hoursStandard;
+		document.getElementById('buttonLabel').innerHTML = '24';
+	}
+}
+
 initiateDate(dateData, monthNames, weekdays);
-setTime(hoursString, minutes, secondsString);
+setTime(hoursDisplay, minutes, secondsString);
 setDate(dayOfWeek, month, day);
 
 setInterval(function() {
@@ -83,5 +90,5 @@ setInterval(function() {
 		initiateDate(new Date(), monthNames, weekdays);
 	}
 	secondsString = secondsNumeral.toString().padStart(2, '0');
-	setTime(hoursString, minutes, secondsString);
+	setTime(hoursDisplay, minutes, secondsString);
 }, 1000);

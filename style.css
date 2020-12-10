@@ -15,7 +15,6 @@ body {
 
 .time {
 	font-family: 'Roboto', sans-serif;
-	font-family: 'Roboto', sans-serif;
 	font-weight: 100;
 	font-size: 3em;
 }
@@ -24,4 +23,16 @@ body {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 400;
 	font-size: 3em;
+}
+
+button {
+	font-family: 'Roboto', sans-serif;
+	margin: 10px 0;
+	font-size: 1em;
+	padding: 10px 24px;
+	color: whitesmoke;
+	border: 1px solid whitesmoke;
+	background-color: #cf8bf3;
+	border-radius: 5px 5px;
+	outline: none;
 }
