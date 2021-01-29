@@ -12,4 +12,4 @@ I used Javascript, HTML, and CSS to create a webpage that displays the current t
 
 ## Author
 
-* **Bryan Herrera** - *Full-Stack Developer* - [Website](bryan-herrera.com) | [LinkedIn](https://www.linkedin.com/in/herrerabryan/)  
+* **Bryan Herrera** - *Full-Stack Developer* - [Website](http://bryan-herrera.com) | [LinkedIn](https://www.linkedin.com/in/herrerabryan/)  
